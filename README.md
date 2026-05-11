@@ -1,6 +1,6 @@
 # Candy AI
 
-Candy AI is a Laravel 12 chat and image workspace for an OpenAI-compatible `enowxai` proxy. It is designed as a lightweight private AI companion with model discovery, chat history, image generation, file/image attachments, and a polished Candy-themed interface.
+Candy AI is a Laravel 12 chat and image workspace for an OpenAI-compatible AI gateway. It is designed as a lightweight private AI companion from Bhara Lab with model discovery, chat history, image generation, file/image attachments, and a polished Candy-themed interface.
 
 <p align="center">
   <img src="public/candy/c9a979d9-0714-411f-8b90-9082b5639bff.png" alt="Candy AI preview" width="860">
@@ -24,7 +24,7 @@ Candy AI is a Laravel 12 chat and image workspace for an OpenAI-compatible `enow
 
 ## Features
 
-- Chat interface with selectable AI models from an `enowxai` `/v1/models` endpoint.
+- Chat interface with selectable AI models from an OpenAI-compatible `/v1/models` endpoint.
 - Image generation mode with a dedicated image model selector.
 - Image and text/code file attachments for multimodal chat.
 - Local browser chat history with per-chat delete and clear-all controls.
@@ -46,7 +46,7 @@ Candy AI is a Laravel 12 chat and image workspace for an OpenAI-compatible `enow
 - PHP 8.2 or newer
 - Composer
 - Node.js 20 or newer
-- An OpenAI-compatible `enowxai` proxy
+- An OpenAI-compatible AI gateway
 - Required PHP extensions: `openssl`, `fileinfo`, `mbstring`, `curl`, `pdo_sqlite`
 
 ## Environment
@@ -65,24 +65,22 @@ SESSION_DRIVER=file
 CACHE_STORE=file
 QUEUE_CONNECTION=sync
 
-ENOWXAI_BASE_URL=http://your-enowxai-host:1430
-ENOWXAI_API_KEY=your-api-key
-ENOWXAI_DEFAULT_CHAT_MODEL=claude-sonnet-4.5
-ENOWXAI_DEFAULT_IMAGE_MODEL=canva-image
-ENOWXAI_DEFAULT_MAX_TOKENS=12000
-ENOWXAI_MAX_TOKENS=32000
-ENOWXAI_STREAM_UPSTREAM=false
-ENOWXAI_REQUEST_TIMEOUT=600
-
 CANDY_AUTH_USERNAME=your-username
 CANDY_AUTH_PASSWORD=your-password
+CANDY_PERSONA="Kamu adalah Candy AI, asisten AI pribadi dari Bhara Lab dan Mas Bhara."
+
+CANDY_AI_BASE_URL=http://your-ai-gateway:1430
+CANDY_AI_API_KEY=your-api-key
+CANDY_AI_GATEWAY_LABEL="Bhara Lab AI Gateway"
+CANDY_AI_DEFAULT_CHAT_MODEL=claude-sonnet-4.5
+CANDY_AI_DEFAULT_IMAGE_MODEL=canva-image
+CANDY_AI_DEFAULT_MAX_TOKENS=12000
+CANDY_AI_MAX_TOKENS=32000
+CANDY_AI_STREAM_UPSTREAM=false
+CANDY_AI_REQUEST_TIMEOUT=600
 ```
 
-If your `enowxai` container exposes an API key command, you can usually retrieve it with:
-
-```bash
-docker exec enowxai /root/.local/bin/enowxai apikey
-```
+Use an API key from your own OpenAI-compatible gateway provider.
 
 ## Local Setup
 
@@ -163,9 +161,9 @@ LOG_CHANNEL=stderr
 
 ```text
 app/Http/Controllers/CandyAuthController.php   Login and logout flow
-app/Http/Controllers/CandyProxyController.php  enowxai API proxy
+app/Http/Controllers/CandyProxyController.php  AI gateway proxy
 app/Http/Middleware/RequireCandyAuth.php       Candy login guard
-config/candy.php                               Candy/enowxai settings
+config/candy.php                               Candy persona and gateway settings
 resources/views/candy.blade.php               Main app shell
 resources/views/login.blade.php               Login screen
 resources/js/app.js                           Chat, history, model, image UI

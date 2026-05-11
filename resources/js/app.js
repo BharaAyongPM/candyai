@@ -261,7 +261,7 @@ async function loadSettings() {
     try {
         const data = await fetchJson('/api/candy/settings');
         state.settings = data;
-        el.baseUrl.textContent = data.baseUrl;
+        el.baseUrl.textContent = data.gatewayLabel || data.baseUrl;
         el.keyStatus.textContent = data.hasApiKey ? 'Ready' : 'API key missing';
         applyTokenSettings(data);
     } catch (error) {
@@ -891,7 +891,7 @@ async function sendChat() {
     }
 
     if (!state.settings?.hasApiKey) {
-        pushAssistantError('ENOWXAI_API_KEY belum diisi di .env.');
+        pushAssistantError('CANDY_AI_API_KEY belum diisi di .env.');
         return;
     }
 
@@ -1047,7 +1047,7 @@ async function generateImage() {
     }
 
     if (!state.settings?.hasApiKey) {
-        pushAssistantError('ENOWXAI_API_KEY belum diisi di .env.');
+        pushAssistantError('CANDY_AI_API_KEY belum diisi di .env.');
         return;
     }
 

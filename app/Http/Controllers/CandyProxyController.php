@@ -17,6 +17,7 @@ class CandyProxyController extends Controller
     {
         return response()->json([
             'baseUrl' => config('candy.base_url'),
+            'gatewayLabel' => config('candy.gateway_label'),
             'hasApiKey' => filled(config('candy.api_key')),
             'defaultChatModel' => config('candy.default_chat_model'),
             'defaultImageModel' => config('candy.default_image_model'),
@@ -60,15 +61,10 @@ class CandyProxyController extends Controller
             'max_tokens' => ['nullable', 'integer', 'min:128', 'max:'.$maxTokens],
         ]);
 
-        $messages = $validated['messages'];
-        $system = trim((string) ($validated['system'] ?? ''));
-
-        if ($system !== '') {
-            array_unshift($messages, [
-                'role' => 'system',
-                'content' => $system,
-            ]);
-        }
+        $messages = $this->chatMessagesWithPersona(
+            $validated['messages'],
+            trim((string) ($validated['system'] ?? '')),
+        );
 
         $payload = [
             'model' => $validated['model'],
@@ -102,7 +98,7 @@ class CandyProxyController extends Controller
 
         $payload = [
             'model' => $validated['model'],
-            'instructions' => $validated['instructions'] ?? '',
+            'instructions' => $this->instructionsWithPersona($validated['instructions'] ?? ''),
             'input' => $validated['input'],
         ];
 
@@ -320,6 +316,39 @@ class CandyProxyController extends Controller
         return config('candy.base_url').$path;
     }
 
+    private function chatMessagesWithPersona(array $messages, string $system): array
+    {
+        $persona = $this->persona();
+        $systemParts = [$persona];
+
+        if ($system !== '') {
+            $systemParts[] = 'Instruksi tambahan pengguna aplikasi: '.$system;
+        }
+
+        array_unshift($messages, [
+            'role' => 'system',
+            'content' => implode("\n\n", $systemParts),
+        ]);
+
+        return $messages;
+    }
+
+    private function instructionsWithPersona(string $instructions): string
+    {
+        $instructions = trim($instructions);
+
+        if ($instructions === '') {
+            return $this->persona();
+        }
+
+        return $this->persona()."\n\nInstruksi tambahan pengguna aplikasi: ".$instructions;
+    }
+
+    private function persona(): string
+    {
+        return trim((string) config('candy.persona'));
+    }
+
     private function apiKey(): string
     {
         return (string) config('candy.api_key');
@@ -332,7 +361,7 @@ class CandyProxyController extends Controller
         }
 
         return response()->json([
-            'message' => 'ENOWXAI_API_KEY belum diisi di .env.',
+            'message' => 'CANDY_AI_API_KEY belum diisi di .env.',
         ], 422);
     }
 }

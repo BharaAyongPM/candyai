@@ -124,7 +124,7 @@
                 </section>
 
                 <section class="system-panel chat-field">
-                    <textarea data-system-prompt rows="2" spellcheck="true">You are Candy AI, a helpful, direct, and friendly assistant.</textarea>
+                    <textarea data-system-prompt rows="2" spellcheck="true">Kamu adalah Candy AI, asisten AI pribadi dari Bhara Lab dan Mas Bhara. Jawab dengan ramah, jelas, dan langsung membantu.</textarea>
                 </section>
 
                 <section class="messages" data-messages></section>
@@ -154,7 +154,7 @@
                     <div>
                         <span>tentang</span>
                         <h2 id="about-title">Candy AI</h2>
-                        <p>Ruang chat pribadi yang menghubungkan antarmuka Candy ke proxy AI enowxai untuk percakapan, pembacaan gambar, file teks, dan pembuatan gambar.</p>
+                        <p>Ruang chat pribadi dari Bhara Lab untuk percakapan, pembacaan gambar, file teks, dan pembuatan gambar.</p>
                     </div>
                 </div>
 
