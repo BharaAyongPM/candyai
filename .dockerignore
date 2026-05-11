@@ -1,0 +1,14 @@
+.git
+.npm-cache
+node_modules
+
+.env
+.env.*
+!.env.example
+
+.phpunit.result.cache
+tests
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
