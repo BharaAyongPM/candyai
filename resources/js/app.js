@@ -278,8 +278,8 @@ function applyTokenSettings(settings) {
 }
 
 async function loadModels() {
-    fillSelect(el.chatModel, [state.settings?.defaultChatModel || 'claude-sonnet-4.5']);
-    fillSelect(el.imageModel, [state.settings?.defaultImageModel || 'canva-image']);
+    fillSelect(el.chatModel, [state.settings?.defaultChatModel || 'qwen3.7-max']);
+    fillSelect(el.imageModel, [state.settings?.defaultImageModel || '']);
 
     if (!state.settings?.hasApiKey) {
         return;
@@ -288,8 +288,8 @@ async function loadModels() {
     try {
         const data = await fetchJson('/api/candy/models');
         const models = normalizeModels(data);
-        const chatModels = models.filter((model) => !/image|canva|draw|sdxl|flux/i.test(model));
-        const imageModels = models.filter((model) => /image|canva|draw|sdxl|flux/i.test(model));
+        const chatModels = models.filter((model) => !/image|draw|sdxl|flux/i.test(model));
+        const imageModels = models.filter((model) => /image|draw|sdxl|flux/i.test(model));
 
         fillSelect(el.chatModel, chatModels.length ? chatModels : models, state.settings.defaultChatModel);
         fillSelect(el.imageModel, imageModels.length ? imageModels : [state.settings.defaultImageModel], state.settings.defaultImageModel);
