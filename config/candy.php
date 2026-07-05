@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'base_url' => rtrim(env('CANDY_AI_BASE_URL', 'https://bandelbanget.xyz/v1'), '/'),
+    'base_url' => rtrim(env('CANDY_AI_BASE_URL', 'https://bandelbanget.xyz'), '/'),
     'api_key' => env('CANDY_AI_API_KEY', ''),
     'gateway_label' => env('CANDY_AI_GATEWAY_LABEL', 'BandelBanget AI Gateway'),
     'default_chat_model' => env('CANDY_AI_DEFAULT_CHAT_MODEL', 'qwen3.7-max'),

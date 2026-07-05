@@ -278,6 +278,7 @@ function applyTokenSettings(settings) {
 }
 
 async function loadModels() {
+    const knownModels = ['qwen3.7-max', 'glm-5.2', 'kimi-k2.7-code', 'deepseek-v4-pro', 'qwen3.7-plus'];
     fillSelect(el.chatModel, [state.settings?.defaultChatModel || 'qwen3.7-max']);
     fillSelect(el.imageModel, [state.settings?.defaultImageModel || '']);
 
@@ -291,9 +292,11 @@ async function loadModels() {
         const chatModels = models.filter((model) => !/image|draw|sdxl|flux/i.test(model));
         const imageModels = models.filter((model) => /image|draw|sdxl|flux/i.test(model));
 
-        fillSelect(el.chatModel, chatModels.length ? chatModels : models, state.settings.defaultChatModel);
+        const finalChatModels = chatModels.length ? chatModels : knownModels;
+        fillSelect(el.chatModel, finalChatModels, state.settings.defaultChatModel);
         fillSelect(el.imageModel, imageModels.length ? imageModels : [state.settings.defaultImageModel], state.settings.defaultImageModel);
     } catch (error) {
+        fillSelect(el.chatModel, knownModels, state.settings.defaultChatModel);
         el.keyStatus.textContent = 'Models unavailable';
     }
 }

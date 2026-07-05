@@ -69,7 +69,7 @@ CANDY_AUTH_USERNAME=your-username
 CANDY_AUTH_PASSWORD=your-password
 CANDY_PERSONA="Kamu adalah Candy AI, asisten AI pribadi dari Bhara Lab dan Mas Bhara."
 
-CANDY_AI_BASE_URL=https://bandelbanget.xyz/v1
+CANDY_AI_BASE_URL=https://bandelbanget.xyz
 CANDY_AI_API_KEY=your-api-key
 CANDY_AI_GATEWAY_LABEL="BandelBanget AI Gateway"
 CANDY_AI_DEFAULT_CHAT_MODEL=qwen3.7-max
